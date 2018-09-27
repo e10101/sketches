@@ -50,8 +50,19 @@
           <div>Samples ({{sample.length}}):</div>
           <div [ngStyle]="{'font-size': fontSize + 'px'}">
             <div *ngFor="let s of sample" class="d-inline-block">
-              <div>{{s.value}}</div>
-              <div style="font-size: 16px; text-align: center;">{{s.index}}</div>
+              <div *ngIf="currentIndex != s.index">
+                {{s.value}}
+
+                <div style="font-size: 16px; text-align: center;">{{s.index}}</div>
+              </div>
+              <div *ngIf="currentIndex == s.index">
+                <div style="background-color: lightblue;">
+                  {{s.value}}
+                </div>
+                <div style="background-color: blue; color: white;">
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">{{s.index}}</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -82,6 +93,29 @@
           </form>
         </div>
       </div>
+
+      <div class="card mt-3">
+        <h5 class="card-header">Operation</h5>
+        <div class="card-body">
+          <form>
+            <button class="btn btn-primary" (click)="onNextStep()">Next</button>
+            <div class="text-center" *ngIf="sample && sample.length > 0" >
+              <div style="font-size: 64px; margin:0 auto; max-width: 128px; background-color: lightblue; border-radius: 10%;">
+                {{(sample[currentIndex-1]).value}}
+              </div>
+              <div class="text-muted">
+                Current index: <strong>{{currentIndex}}</strong>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+          <h5 class="card-header">Set</h5>
+          <div class="card-body">
+          </div>
+        </div>
     </div>
   </div>
 </div>

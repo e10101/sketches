@@ -20,6 +20,8 @@ export class MisraGriesComponent implements OnInit {
 
   public fontSize = 32; // px
 
+  public currentIndex: number;
+
   public get fruitsList(): string[] {
     return Array.from(this.fruits);
   }
@@ -45,6 +47,9 @@ export class MisraGriesComponent implements OnInit {
       });
     }
 
+    // Reset the index
+    this.currentIndex = 1;
+
     this.sample = sample;
   }
 
@@ -54,5 +59,9 @@ export class MisraGriesComponent implements OnInit {
 
   onSmallFont() {
     this.fontSize *= 0.8;
+  }
+
+  onNextStep() {
+    this.currentIndex++;
   }
 }
