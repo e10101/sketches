@@ -48,7 +48,7 @@ export class MisraGriesComponent implements OnInit {
     }
 
     // Reset the index
-    this.currentIndex = 1;
+    this.currentIndex = 0;
 
     this.sample = sample;
   }

@@ -99,7 +99,7 @@
         <div class="card-body">
           <form>
             <button class="btn btn-primary" (click)="onNextStep()">Next</button>
-            <div class="text-center" *ngIf="sample && sample.length > 0" >
+            <div class="text-center" *ngIf="sample && sample.length > 0 && currentIndex > 0" >
               <div style="font-size: 64px; margin:0 auto; max-width: 128px; background-color: lightblue; border-radius: 10%;">
                 {{(sample[currentIndex-1]).value}}
               </div>
