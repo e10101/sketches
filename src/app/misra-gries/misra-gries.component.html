@@ -1,0 +1,87 @@
+<div class="container mb-5">
+  <h1>
+    Misra-Gries Demo
+  </h1>
+
+  <div class="row">
+    <div class="col-12 mb-2">
+      <div>
+        font-size: {{fontSize}}px
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button class="btn btn-sm btn-light" (click)="onSmallFont()">-</button>
+          <button class="btn btn-sm btn-light" (click)="onLargeFont()">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <h5 class="card-header">Configuration</h5>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label for="Categories">Categories ({{fruitsList.length}})</label>
+              <input type="text" [(ngModel)]="fruits" name="Categories" class="form-control" id="Categories"
+                placeholder="Categories">
+            </div>
+
+            <div [ngStyle]="{'font-size': fontSize + 'px'}">
+              <span class="fruit" *ngFor="let fruit of fruitsList">
+                {{fruit}}
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="Size">Sample Size ({{sampleSize}})</label>
+              <input type="text" [(ngModel)]="sampleSize" name="Size" class="form-control" id="Size" placeholder="Size">
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <h5 class="card-header">Data Stream - Example</h5>
+        <div class="card-body">
+          <form>
+            <button class="btn btn-primary" (click)="onGenerateSample()">Generate</button>
+          </form>
+
+          <hr>
+
+          <div>Samples ({{sample.length}}):</div>
+          <div [ngStyle]="{'font-size': fontSize + 'px'}">
+            <div *ngFor="let s of sample" class="d-inline-block">
+              <div>{{s.value}}</div>
+              <div style="font-size: 16px; text-align: center;">{{s.index}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <h5 class="card-header">Counting - Real</h5>
+        <div class="card-body">
+          <div [ngStyle]="{'font-size': fontSize + 'px'}">
+            <div *ngFor="let c of realCounting" class="d-inline-block">
+              <div>{{c.key}}</div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.value}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <h5 class="card-header">Misra-Gries Sketches</h5>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label for="k"><strong>k</strong> ({{k}})</label>
+              <input type="text" [(ngModel)]="k" name="k" class="form-control" id="k" placeholder="k size">
+              <small class="form-text text-muted">The Misra-Gries counters size.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

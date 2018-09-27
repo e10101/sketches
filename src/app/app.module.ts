@@ -1,14 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
+import {
+  MisraGriesComponent,
+} from './misra-gries';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MisraGriesComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
