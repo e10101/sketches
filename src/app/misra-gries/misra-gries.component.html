@@ -87,7 +87,21 @@
         <h5 class="card-header">Operation</h5>
         <div class="card-body">
           <form>
-            <button class="btn btn-primary" (click)="onNextStep()">Next</button>
+            <div class="form-row">
+              <button class="btn btn-primary" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
+              <div *ngIf="!isAutoNext">
+                <button class="btn btn-success ml-2" (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
+                  Auto
+                </button>
+              </div>
+              <div *ngIf="isAutoNext">
+                <button class="btn btn-secondary ml-2" (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
+                  Stop
+                </button>
+              </div>
+              <input type="number" [(ngModel)]="autoNextOffsetSeconds" name="autoNextOffsetSeconds" class="form-control col-md-2 ml-2"
+                placeholder="seconds">
+            </div>
             <div class="text-center" *ngIf="sample && sample.length > 0">
               <div class="d-inline-block" *ngIf="currentIndex > 0">
                 <div class="big-fruit current">
@@ -123,25 +137,25 @@
           <!-- <pre>{{sketch.counters | json}}</pre> -->
 
           <div [ngStyle]="{'font-size': fontSize + 'px'}">
-              <div *ngFor="let c of sketch.counters" class="d-inline-block">
-                <div>{{c.label}}</div>
-                <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
-              </div>
+            <div *ngFor="let c of sketch.counters" class="d-inline-block">
+              <div>{{c.label}}</div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>
+          </div>
         </div>
       </div>
 
       <div class="card mt-3">
-          <h5 class="card-header">Comparison - exactly counts</h5>
-          <div class="card-body">
-            <div [ngStyle]="{'font-size': fontSize + 'px'}">
-              <div *ngFor="let c of realCounting" class="d-inline-block">
-                <div>{{c.key}}</div>
-                <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.value}}</div>
-              </div>
+        <h5 class="card-header">Comparison - exactly counts</h5>
+        <div class="card-body">
+          <div [ngStyle]="{'font-size': fontSize + 'px'}">
+            <div *ngFor="let c of realCounting" class="d-inline-block">
+              <div>{{c.key}}</div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.value}}</div>
             </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </div>

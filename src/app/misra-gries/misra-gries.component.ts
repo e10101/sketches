@@ -25,6 +25,10 @@ export class MisraGriesComponent implements OnInit {
 
   public sketch: MisraGries;
 
+  public isAutoNext = false;
+  public autoNextOffsetSeconds = 100;  // ms
+  private autoNextTimer = null;
+
   public get k(): number {
     return this._k;
   }
@@ -46,6 +50,8 @@ export class MisraGriesComponent implements OnInit {
     return sorted;
   }
 
+
+
   constructor() {
     this.sketch = new MisraGries(this.k);
   }
@@ -66,6 +72,9 @@ export class MisraGriesComponent implements OnInit {
     this.sample = sample;
 
     this.sketch = new MisraGries(this.k);
+
+    this.isAutoNext = false;
+    clearInterval(this.autoNextTimer);
   }
 
   onLargeFont() {
@@ -77,10 +86,14 @@ export class MisraGriesComponent implements OnInit {
   }
 
   onNextStep() {
+    console.log('onNextStep');
     if (this.sample && this.sample.length <= this.currentIndex) {
+      this.isAutoNext = false;
       return;
     }
     this.currentIndex++;
+
+    console.log('currentIndex', this.currentIndex);
 
     if (this.currentIndex > 0) {
       const index = this.currentIndex - 1;
@@ -89,6 +102,22 @@ export class MisraGriesComponent implements OnInit {
 
       this.sketch.update(item);
     }
+  }
+
+  onStartPause() {
+    if (this.isAutoNext) {
+      clearInterval(this.autoNextTimer);
+    } else {
+      console.log('timer now');
+      if (this.autoNextTimer) {
+        clearInterval(this.autoNextTimer);
+      }
+      this.autoNextTimer = setInterval(() => {
+        this.onNextStep();
+      }, this.autoNextOffsetSeconds);
+    }
+
+    this.isAutoNext = !this.isAutoNext;
   }
 
   // isItemInSet(item: Item): boolean {
