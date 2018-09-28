@@ -32,7 +32,7 @@
 
             <div class="form-group">
               <label for="Size">Sample Size ({{sampleSize}})</label>
-              <input type="text" [(ngModel)]="sampleSize" name="Size" class="form-control" id="Size" placeholder="Size">
+              <input type="number" [(ngModel)]="sampleSize" name="Size" class="form-control" id="Size" placeholder="Size">
             </div>
           </form>
         </div>
@@ -51,13 +51,13 @@
           <div [ngStyle]="{'font-size': fontSize + 'px'}">
             <div *ngFor="let s of sample" class="d-inline-block">
               <div *ngIf="currentIndex != s.index">
-                {{s.value}}
+                {{s.label}}
 
                 <div style="font-size: 16px; text-align: center;">{{s.index}}</div>
               </div>
               <div *ngIf="currentIndex == s.index">
                 <div style="background-color: lightblue;">
-                  {{s.value}}
+                  {{s.label}}
                 </div>
                 <div style="background-color: blue; color: white;">
                   <div style="font-size: 16px; text-align: center; font-weight: bold;">{{s.index}}</div>
@@ -68,17 +68,6 @@
         </div>
       </div>
 
-      <div class="card mt-3">
-        <h5 class="card-header">Counting - Real</h5>
-        <div class="card-body">
-          <div [ngStyle]="{'font-size': fontSize + 'px'}">
-            <div *ngFor="let c of realCounting" class="d-inline-block">
-              <div>{{c.key}}</div>
-              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.value}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="col-6">
       <div class="card">
@@ -87,7 +76,7 @@
           <form>
             <div class="form-group">
               <label for="k"><strong>k</strong> ({{k}})</label>
-              <input type="text" [(ngModel)]="k" name="k" class="form-control" id="k" placeholder="k size">
+              <input type="number" [(ngModel)]="k" name="k" class="form-control" id="k" placeholder="k size">
               <small class="form-text text-muted">The Misra-Gries counters size.</small>
             </div>
           </form>
@@ -99,21 +88,58 @@
         <div class="card-body">
           <form>
             <button class="btn btn-primary" (click)="onNextStep()">Next</button>
-            <div class="text-center" *ngIf="sample && sample.length > 0 && currentIndex > 0" >
-              <div style="font-size: 64px; margin:0 auto; max-width: 128px; background-color: lightblue; border-radius: 10%;">
-                {{(sample[currentIndex-1]).value}}
+            <div class="text-center" *ngIf="sample && sample.length > 0">
+              <div class="d-inline-block" *ngIf="currentIndex > 0">
+                <div class="big-fruit current">
+                  {{(sample[currentIndex-1]).label}}
+                </div>
+                <div class="text-muted">
+                  Current index: <strong>{{currentIndex}}</strong>
+                </div>
               </div>
-              <div class="text-muted">
-                Current index: <strong>{{currentIndex}}</strong>
+              <div class="d-inline-block ml-3" *ngIf="sample.length > currentIndex">
+                <div class="big-fruit next">
+                  {{(sample[currentIndex]).label}}
+                </div>
+                <div class="text-muted">
+                  Next index: <strong>{{currentIndex + 1}}</strong>
+                </div>
               </div>
+
             </div>
           </form>
         </div>
       </div>
 
       <div class="card mt-3">
-          <h5 class="card-header">Set</h5>
+        <h5 class="card-header">Set</h5>
+        <div class="card-body">
+          <div>
+            k: <strong>{{sketch.k}}</strong>
+          </div>
+          <div>
+            Counters' size: <strong>{{sketch.counters.length}}</strong>
+          </div>
+          <!-- <pre>{{sketch.counters | json}}</pre> -->
+
+          <div [ngStyle]="{'font-size': fontSize + 'px'}">
+              <div *ngFor="let c of sketch.counters" class="d-inline-block">
+                <div>{{c.label}}</div>
+                <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+          <h5 class="card-header">Comparison - exactly counts</h5>
           <div class="card-body">
+            <div [ngStyle]="{'font-size': fontSize + 'px'}">
+              <div *ngFor="let c of realCounting" class="d-inline-block">
+                <div>{{c.key}}</div>
+                <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.value}}</div>
+              </div>
+            </div>
           </div>
         </div>
     </div>

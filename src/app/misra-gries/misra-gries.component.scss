@@ -6,6 +6,22 @@ input {
 .content {
   width: 100%;
 }
+
 .container {
   max-width: 1600px;
+}
+
+.big-fruit {
+  font-size: 64px;
+  margin: 0 auto;
+  max-width: 128px;
+  border-radius: 10%;
+
+  &.current {
+    background-color: lightblue;
+  }
+
+  &.next {
+    background-color: lightgreen;
+  }
 }
