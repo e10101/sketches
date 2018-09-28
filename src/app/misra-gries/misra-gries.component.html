@@ -121,6 +121,12 @@
               </div>
 
             </div>
+            <!-- Progress -->
+            <div>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{'width': (100 * currentIndex / sample.length) + '%'}"></div>
+              </div>
+            </div>
           </form>
         </div>
       </div>
