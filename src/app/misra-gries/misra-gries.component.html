@@ -15,8 +15,17 @@
     </div>
     <div class="col-6">
       <div class="card">
-        <h5 class="card-header">Configuration</h5>
-        <div class="card-body">
+        <div class="card-header">
+          <h5 class="float-left">Configuration</h5>
+          <span class="ml-2" *ngIf="hide.config">
+            Category size: <strong>{{categorySize}}</strong>
+            Sample size: <strong>{{sampleSize}}</strong>
+          </span>
+          <span class="float-right">
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.config = !hide.config">H/S</button>
+          </span>
+        </div>
+        <div class="card-body" *ngIf="!hide.config">
           <form>
             <div class="form-group">
               <label for="fruits">Category Source ({{fruitsList.length}})</label>
@@ -43,8 +52,13 @@
       </div>
 
       <div class="card mt-3">
-        <h5 class="card-header">Data Stream - Example</h5>
-        <div class="card-body">
+        <h5 class="card-header">
+          Data Stream - Example
+          <div class="float-right">
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.stream = !hide.stream">H/S</button>
+          </div>
+        </h5>
+        <div class="card-body" *ngIf="!hide.stream">
           <form>
             <div class="row">
               <div class="col-auto pr-1">
@@ -100,8 +114,16 @@
     </div>
     <div class="col-6">
       <div class="card">
-        <h5 class="card-header">Sketches</h5>
-        <div class="card-body">
+        <div class="card-header">
+          <h5 class="float-left">Sketches</h5>
+          <span class="ml-2" *ngIf="hide.sketches">
+            k: <strong>{{k}}</strong>
+          </span>
+          <div class="float-right">
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.sketches = !hide.sketches">H/S</button>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!hide.sketches">
           <form>
             <div class="form-group">
               <label for="k"><strong>k</strong> ({{k}})</label>
@@ -113,8 +135,13 @@
       </div>
 
       <div class="card mt-3">
-        <h5 class="card-header">Operation</h5>
-        <div class="card-body">
+        <h5 class="card-header">
+          Operation
+          <div class="float-right">
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.operation = !hide.operation">H/S</button>
+          </div>
+        </h5>
+        <div class="card-body" *ngIf="!hide.operation">
           <form>
             <!-- Controls -->
             <div class="row">
@@ -185,8 +212,13 @@
 
       <!-- Misra-Gries -->
       <div class="card mt-3">
-        <h5 class="card-header">Misra-Gries Set</h5>
-        <div class="card-body">
+        <h5 class="card-header">
+          Misra-Gries
+          <div class="float-right">
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.mg = !hide.mg">H/S</button>
+          </div>
+        </h5>
+        <div class="card-body" *ngIf="!hide.mg">
           <div>
             k: <strong>{{sketch.k}}</strong>
           </div>
@@ -211,8 +243,13 @@
 
       <!-- Space Saving -->
       <div class="card mt-3">
-        <h5 class="card-header">Space Saving Set</h5>
-        <div class="card-body">
+        <h5 class="card-header">
+          Space Saving
+          <div class="float-right">
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.ss = !hide.ss">H/S</button>
+          </div>
+        </h5>
+        <div class="card-body" *ngIf="!hide.ss">
           <div>
             k: <strong>{{spaceSavingSketch.k}}</strong>
           </div>

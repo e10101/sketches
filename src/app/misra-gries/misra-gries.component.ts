@@ -44,6 +44,15 @@ export class MisraGriesComponent implements OnInit {
   public autoNextOffsetSeconds = 10;  // ms
   private autoNextTimer = null;
 
+  public hide = {
+    config: false,
+    stream: false,
+    sketches: false,
+    operation: false,
+    mg: false,
+    ss: false,
+  };
+
   public sampleTypeOptions = [
     new SampleTypeOption('Random', SampleType.RANDOM),
     new SampleTypeOption('Repeat', SampleType.REPEAT),
