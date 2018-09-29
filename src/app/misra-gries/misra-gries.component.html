@@ -93,18 +93,27 @@
           <form>
             <!-- Controls -->
             <div class="row">
-              <div class="col">
-
-                <div class="">
-                  <button class="btn btn-primary d-inline-block" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
-                  <button class="btn ml-2" [ngClass]="{'btn-success': !isAutoNext, 'btn-secondary': isAutoNext}"
-                    (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
-                    {{isAutoNext? 'Stop' : 'Auto'}}
-                  </button>
-                  <input type="number" [(ngModel)]="autoNextOffsetSeconds" name="autoNextOffsetSeconds" class="form-control d-inline-block col-md-2 ml-2"
-                    placeholder="seconds">
-                </div>
+              <div class="col-auto pr-1">
+                <button class="btn btn-block btn-primary" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
               </div>
+              <div class="col-auto px-1">
+                <button class="btn btn-block" [ngClass]="{'btn-success': !isAutoNext, 'btn-secondary': isAutoNext}"
+                  (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
+                  {{isAutoNext? 'Stop' : 'Auto'}}
+                </button>
+              </div>
+              <div class="col-auto px-1">
+                <select class="custom-select" [(ngModel)]="autoNextOffsetSeconds" name="speed">
+                  <option value="1000">Speed: Walking</option>
+                  <option value="100">Speed: Running</option>
+                  <option value="10">Speed: Biking</option>
+                  <option value="1">Speed: Flying</option>
+                </select>
+              </div>
+              <!-- <div class="col-auto px-1">
+                <input type="number" [(ngModel)]="autoNextOffsetSeconds" name="autoNextOffsetSeconds" class="form-control"
+                  placeholder="seconds">
+              </div> -->
             </div>
 
             <!-- Current and Next Item-->
