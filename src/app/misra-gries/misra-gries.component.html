@@ -129,7 +129,7 @@
             <!-- Progress -->
             <div class="mt-2" *ngIf="sample && sample.length > 0">
               <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{'width': (100 * currentIndex / sample.length) + '%'}"></div>
+                <div class="progress-bar" style="transition: none;" role="progressbar" [ngStyle]="{'width': (100 * currentIndex / sample.length) + '%'}"></div>
               </div>
             </div>
           </form>
