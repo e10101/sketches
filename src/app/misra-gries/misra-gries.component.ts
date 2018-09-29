@@ -65,7 +65,7 @@ export class MisraGriesComponent implements OnInit {
     this.sketch = new MisraGries(this.k);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onGenerateSample() {
     const sample: Item[] = [];
@@ -74,15 +74,10 @@ export class MisraGriesComponent implements OnInit {
       sample.push(new Item(label, i + 1));
     }
 
-    // Reset the index
-    this.currentIndex = 0;
 
     this.sample = sample;
 
-    this.sketch = new MisraGries(this.k);
-
-    this.isAutoNext = false;
-    clearInterval(this.autoNextTimer);
+    this.cleanIndexAndSketch();
   }
 
   onLargeFont() {
@@ -122,6 +117,20 @@ export class MisraGriesComponent implements OnInit {
     }
 
     this.isAutoNext = !this.isAutoNext;
+  }
+
+  onResetIndex() {
+    this.cleanIndexAndSketch();
+  }
+
+  private cleanIndexAndSketch() {
+    // Reset the index
+    this.currentIndex = 0;
+
+    this.sketch = new MisraGries(this.k);
+
+    this.isAutoNext = false;
+    clearInterval(this.autoNextTimer);
   }
 
   // isItemInSet(item: Item): boolean {
