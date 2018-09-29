@@ -100,13 +100,13 @@
     </div>
     <div class="col-6">
       <div class="card">
-        <h5 class="card-header">Misra-Gries Sketches</h5>
+        <h5 class="card-header">Sketches</h5>
         <div class="card-body">
           <form>
             <div class="form-group">
               <label for="k"><strong>k</strong> ({{k}})</label>
               <input type="range" class="custom-range" [(ngModel)]="k" id="k" name="k" min="1" [max]="fruitsList.length">
-              <small class="form-text text-muted">The Misra-Gries counters size.</small>
+              <small class="form-text text-muted">The counters size.</small>
             </div>
           </form>
         </div>
@@ -183,8 +183,9 @@
         </div>
       </div>
 
+      <!-- Misra-Gries -->
       <div class="card mt-3">
-        <h5 class="card-header">Set</h5>
+        <h5 class="card-header">Misra-Gries Set</h5>
         <div class="card-body">
           <div>
             k: <strong>{{sketch.k}}</strong>
@@ -195,10 +196,35 @@
           <div>
             Decrement count: <strong>{{sketch.decrementCount}}</strong>
           </div>
-          <!-- <pre>{{sketch.counters | json}}</pre> -->
+          <div>
+            Sum counts: <strong>{{sketch.sumCounts}}</strong>
+          </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
             <div *ngFor="let c of sketch.counters" class="d-inline-block">
+              <div>{{c.label}}</div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Space Saving -->
+      <div class="card mt-3">
+        <h5 class="card-header">Space Saving Set</h5>
+        <div class="card-body">
+          <div>
+            k: <strong>{{spaceSavingSketch.k}}</strong>
+          </div>
+          <div>
+            Counters' size: <strong>{{spaceSavingSketch.counters.length}}</strong>
+          </div>
+          <div>
+            Sum counts: <strong>{{spaceSavingSketch.sumCounts}}</strong>
+          </div>
+
+          <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
+            <div *ngFor="let c of spaceSavingSketch.counters" class="d-inline-block">
               <div>{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>

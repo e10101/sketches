@@ -1,14 +1,13 @@
 import {
-  Item,
-} from './item';
-import {
   Counter,
 } from './counter';
+import {
+  Item,
+} from './item';
 
-export class MisraGries {
+export class SpaceSaving {
   counters: Counter[];
   k: number;
-  decrementCount: number;
 
   get sumCounts(): number {
     let sum = 0;
@@ -22,8 +21,6 @@ export class MisraGries {
   constructor(k = 5) {
     this.k = k;
     this.counters = [];
-
-    this.decrementCount = 0;
   }
 
   update(item: Item, increment = 1) {
@@ -34,23 +31,8 @@ export class MisraGries {
       const counter = new Counter(item.label, 1);
       this.counters.push(counter);
     } else {
-      this.decrementCounters();
+      this.replaceMinCounter(item);
     }
-  }
-
-  decrementCounters() {
-    this.decrementCount++;
-
-    const newCounters = [];
-    this.counters.forEach((counter) => {
-      counter.count--;
-
-      if (counter.count > 0) {
-        newCounters.push(counter);
-      }
-    });
-
-    this.counters = newCounters;
   }
 
   estimate(item: Item) {
@@ -99,5 +81,28 @@ export class MisraGries {
     });
 
     return result;
+  }
+
+  private findMinCounter(): Counter {
+    let result = null;
+
+    const sorted = this.counters.sort((a, b) => {
+      return a.count - b.count;
+    });
+
+    if (sorted.length > 0) {
+      result = sorted[0];
+    }
+
+    return result;
+  }
+
+  private replaceMinCounter(item: Item) {
+    const minCounter = this.findMinCounter();
+
+    if (minCounter) {
+      minCounter.label = item.label;
+      minCounter.count++;
+    }
   }
 }
