@@ -13,9 +13,6 @@ input {
 
 .big-fruit {
   font-size: 64px;
-  margin: 0 auto;
-  max-width: 128px;
-  border-radius: 10%;
 
   &.current {
     background-color: lightblue;
@@ -24,4 +21,8 @@ input {
   &.next {
     background-color: lightgreen;
   }
+}
+
+.step-title {
+  font-size: 1.5rem;
 }

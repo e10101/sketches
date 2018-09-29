@@ -5,6 +5,7 @@ import {
 export class Counter {
   label: string;
   count: number;
+  decrementCount: number;
 
   constructor(label?: string, count = 0) {
     this.label = label;
@@ -14,10 +15,13 @@ export class Counter {
 export class MisraGries {
   counters: Counter[];
   k: number;
+  decrementCount: number;
 
   constructor(k = 5) {
     this.k = k;
     this.counters = [];
+
+    this.decrementCount = 0;
   }
 
   update(item: Item, increment = 1) {
@@ -33,6 +37,8 @@ export class MisraGries {
   }
 
   decrementCounters() {
+    this.decrementCount++;
+
     const newCounters = [];
     this.counters.forEach((counter) => {
       counter.count--;
@@ -41,7 +47,6 @@ export class MisraGries {
         newCounters.push(counter);
       }
     });
-
 
     this.counters = newCounters;
   }

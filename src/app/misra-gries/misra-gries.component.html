@@ -25,7 +25,8 @@
 
             <div class="form-group">
               <label for="categorySize">Category Size ({{categorySize}})</label>
-              <input type="range" class="custom-range" id="categorySize" [(ngModel)]="categorySize" name="categorySize" min="1" [max]="fruitsList.length">
+              <input type="range" class="custom-range" id="categorySize" [(ngModel)]="categorySize" name="categorySize"
+                min="1" [max]="fruitsList.length">
             </div>
 
             <div [ngStyle]="{'font-size': fontSize + 'px'}" class="bg-light rounded p-2">
@@ -34,7 +35,8 @@
 
             <div class="form-group">
               <label for="Size">Sample Size ({{sampleSize}})</label>
-              <input type="range" class="custom-range" [(ngModel)]="sampleSize" id="sampleSize" name="sampleSize" min="1" max="2000">
+              <input type="range" class="custom-range" [(ngModel)]="sampleSize" id="sampleSize" name="sampleSize" min="1"
+                max="2000">
             </div>
           </form>
         </div>
@@ -90,38 +92,50 @@
         <div class="card-body">
           <form>
             <!-- Controls -->
-            <div class="form-row">
-              <button class="btn btn-primary" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
-              <div *ngIf="!isAutoNext">
-                <button class="btn btn-success ml-2" (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
-                  Auto
-                </button>
+            <div class="row">
+              <div class="col">
+
+                <div class="">
+                  <button class="btn btn-primary d-inline-block" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
+                  <button class="btn ml-2" [ngClass]="{'btn-success': !isAutoNext, 'btn-secondary': isAutoNext}"
+                    (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
+                    {{isAutoNext? 'Stop' : 'Auto'}}
+                  </button>
+                  <input type="number" [(ngModel)]="autoNextOffsetSeconds" name="autoNextOffsetSeconds" class="form-control d-inline-block col-md-2 ml-2"
+                    placeholder="seconds">
+                </div>
               </div>
-              <div *ngIf="isAutoNext">
-                <button class="btn btn-secondary ml-2" (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
-                  Stop
-                </button>
-              </div>
-              <input type="number" [(ngModel)]="autoNextOffsetSeconds" name="autoNextOffsetSeconds" class="form-control col-md-2 ml-2"
-                placeholder="seconds">
             </div>
 
             <!-- Current and Next Item-->
-            <div class="text-center mt-2" *ngIf="sample && sample.length > 0">
-              <div class="d-inline-block" *ngIf="currentIndex > 0">
-                <div class="big-fruit current">
-                  {{(sample[currentIndex-1]).label}}
-                </div>
-                <div class="text-muted">
-                  Current index: <strong>{{currentIndex}}</strong>
+            <div class="row mt-2 text-center" *ngIf="sample && sample.length > 0">
+              <!-- Current -->
+              <div class="col-md-6">
+                <div *ngIf="currentIndex > 0" class="rounded">
+                  <div class="step-title">
+                    <span class="badge badge-pill badge-primary">Current</span>
+                  </div>
+                  <div class="rounded big-fruit current">
+                    {{(sample[currentIndex-1]).label}}
+                  </div>
+                  <div class="text-muted ">
+                    Index: <strong>{{currentIndex}}</strong>
+                  </div>
                 </div>
               </div>
-              <div class="d-inline-block ml-3" *ngIf="sample.length > currentIndex">
-                <div class="big-fruit next">
-                  {{(sample[currentIndex]).label}}
-                </div>
-                <div class="text-muted">
-                  Next index: <strong>{{currentIndex + 1}}</strong>
+
+              <!-- Next -->
+              <div class="col-md-6">
+                <div *ngIf="sample.length > currentIndex" class="rounded">
+                  <div class="step-title">
+                    <span class="badge badge-pill badge-success">Next</span>
+                  </div>
+                  <div class="rounded big-fruit next">
+                    {{(sample[currentIndex]).label}}
+                  </div>
+                  <div class="text-muted">
+                    Index: <strong>{{currentIndex + 1}}</strong>
+                  </div>
                 </div>
               </div>
             </div>
@@ -144,6 +158,9 @@
           </div>
           <div>
             Counters' size: <strong>{{sketch.counters.length}}</strong>
+          </div>
+          <div>
+            Decrement count: <strong>{{sketch.decrementCount}}</strong>
           </div>
           <!-- <pre>{{sketch.counters | json}}</pre> -->
 
