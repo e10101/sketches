@@ -7,6 +7,18 @@ import { MisraGries } from './misra-gries';
 import {
   Item,
 } from './item';
+import { SampleGenerator } from './sample-generator';
+import { SampleType, SampleGeneratorType } from './sample-generator-type';
+
+export class SampleTypeOption {
+  label: string;
+  type: SampleType;
+
+  constructor(label?: string, type: SampleType = SampleType.RANDOM) {
+    this.label = label;
+    this.type = type;
+  }
+}
 
 @Component({
   selector: 'app-misra-gries',
@@ -17,7 +29,7 @@ export class MisraGriesComponent implements OnInit {
   public fruits = '🍇🍈🍉🍊🍋🍌🍍🍎🍏🍐🍑🍒🍓🥝🍅🥥🥑🍆🥔🥕🌽🌶🥒🥦🍄🥜🌰';
   public categorySize = 6;
   public _k = 5;
-  public sampleSize = 200;
+  public sampleSize = 80;
   public sample: Item[] = [];
 
   public fontSize = 32; // px
@@ -27,8 +39,14 @@ export class MisraGriesComponent implements OnInit {
   public sketch: MisraGries;
 
   public isAutoNext = false;
-  public autoNextOffsetSeconds = 100;  // ms
+  public autoNextOffsetSeconds = 10;  // ms
   private autoNextTimer = null;
+
+  public sampleTypeOptions = [
+    new SampleTypeOption('Random', SampleType.RANDOM),
+    new SampleTypeOption('Repeat', SampleType.REPEAT),
+  ];
+  public sampleTypeOption: SampleTypeOption = this.sampleTypeOptions[0];
 
   public get k(): number {
     return this._k;
@@ -59,8 +77,6 @@ export class MisraGriesComponent implements OnInit {
     return sorted;
   }
 
-
-
   constructor() {
     this.sketch = new MisraGries(this.k);
   }
@@ -68,14 +84,7 @@ export class MisraGriesComponent implements OnInit {
   ngOnInit(): void { }
 
   onGenerateSample() {
-    const sample: Item[] = [];
-    for (let i = 0; i < this.sampleSize; i++) {
-      const label = _.sample(this.categoryList);
-      sample.push(new Item(label, i + 1));
-    }
-
-
-    this.sample = sample;
+    this.sample = SampleGenerator.gen(this.sampleSize, this.categoryList, new SampleGeneratorType(this.sampleTypeOption.type));
 
     this.cleanIndexAndSketch();
   }

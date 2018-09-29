@@ -46,7 +46,18 @@
         <h5 class="card-header">Data Stream - Example</h5>
         <div class="card-body">
           <form>
-            <button class="btn btn-primary" (click)="onGenerateSample()">Generate</button>
+            <div class="row">
+              <div class="col-auto">
+                <button class="btn btn-primary" (click)="onGenerateSample()">Generate</button>
+              </div>
+              <div class="col-auto">
+                <select class="custom-select" [(ngModel)]="sampleTypeOption" name="sampleType">
+                  <option [ngValue]="option" *ngFor="let option of sampleTypeOptions;">
+                    {{option.label}}
+                  </option>
+                </select>
+              </div>
+            </div>
           </form>
 
           <hr>
