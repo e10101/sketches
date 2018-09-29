@@ -6,11 +6,11 @@
   <div class="row">
     <div class="col-12 mb-2">
       <div>
-        font-size: {{fontSize}}px
         <div class="btn-group" role="group" aria-label="Basic example">
           <button class="btn btn-sm btn-light" (click)="onSmallFont()">-</button>
           <button class="btn btn-sm btn-light" (click)="onLargeFont()">+</button>
         </div>
+        font-size: {{fontSize}}px
       </div>
     </div>
     <div class="col-6">
@@ -62,13 +62,21 @@
 
           <hr>
 
+          <div [ngStyle]="{'font-size': fontSize + 'px'}">
+            <div *ngFor="let c of realCounting" class="d-inline-block">
+              <div>{{c.key}}</div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.value}}</div>
+            </div>
+          </div>
+
+          <hr>
+
           <div>Samples ({{sample.length}}):</div>
           <div [ngStyle]="{'font-size': fontSize + 'px'}">
             <div *ngFor="let s of sample" class="d-inline-block">
               <div *ngIf="currentIndex != s.index">
                 {{s.label}}
-
-                <div style="font-size: 16px; text-align: center;">{{s.index}}</div>
+                <div [ngClass]="{'text-muted': currentIndex > s.index, 'del': currentIndex > s.index}" style="font-size: 16px; text-align: center;">{{s.index}}</div>
               </div>
               <div *ngIf="currentIndex == s.index">
                 <div style="background-color: lightblue;">
@@ -187,18 +195,6 @@
             <div *ngFor="let c of sketch.counters" class="d-inline-block">
               <div>{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3">
-        <h5 class="card-header">Comparison - exactly counts</h5>
-        <div class="card-body">
-          <div [ngStyle]="{'font-size': fontSize + 'px'}">
-            <div *ngFor="let c of realCounting" class="d-inline-block">
-              <div>{{c.key}}</div>
-              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.value}}</div>
             </div>
           </div>
         </div>
