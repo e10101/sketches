@@ -19,20 +19,22 @@
         <div class="card-body">
           <form>
             <div class="form-group">
-              <label for="Categories">Categories ({{fruitsList.length}})</label>
-              <input type="text" [(ngModel)]="fruits" name="Categories" class="form-control" id="Categories"
-                placeholder="Categories">
+              <label for="fruits">Category Source ({{fruitsList.length}})</label>
+              <textarea class="form-control" [(ngModel)]="fruits" name="fruits" id="fruits" rows="2"></textarea>
             </div>
 
-            <div [ngStyle]="{'font-size': fontSize + 'px'}">
-              <span class="fruit" *ngFor="let fruit of fruitsList">
-                {{fruit}}
-              </span>
+            <div class="form-group">
+              <label for="categorySize">Category Size ({{categorySize}})</label>
+              <input type="range" class="custom-range" id="categorySize" [(ngModel)]="categorySize" name="categorySize" min="1" [max]="fruitsList.length">
+            </div>
+
+            <div [ngStyle]="{'font-size': fontSize + 'px'}" class="bg-light rounded p-2">
+              <span class="fruit" *ngFor="let fruit of categoryList">{{fruit}}</span>
             </div>
 
             <div class="form-group">
               <label for="Size">Sample Size ({{sampleSize}})</label>
-              <input type="number" [(ngModel)]="sampleSize" name="Size" class="form-control" id="Size" placeholder="Size">
+              <input type="range" class="custom-range" [(ngModel)]="sampleSize" id="sampleSize" name="sampleSize" min="1" max="2000">
             </div>
           </form>
         </div>
@@ -76,7 +78,7 @@
           <form>
             <div class="form-group">
               <label for="k"><strong>k</strong> ({{k}})</label>
-              <input type="number" [(ngModel)]="k" name="k" class="form-control" id="k" placeholder="k size">
+              <input type="range" class="custom-range" [(ngModel)]="k" id="k" name="k" min="1" [max]="fruitsList.length">
               <small class="form-text text-muted">The Misra-Gries counters size.</small>
             </div>
           </form>
@@ -87,6 +89,7 @@
         <h5 class="card-header">Operation</h5>
         <div class="card-body">
           <form>
+            <!-- Controls -->
             <div class="form-row">
               <button class="btn btn-primary" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
               <div *ngIf="!isAutoNext">
@@ -102,7 +105,9 @@
               <input type="number" [(ngModel)]="autoNextOffsetSeconds" name="autoNextOffsetSeconds" class="form-control col-md-2 ml-2"
                 placeholder="seconds">
             </div>
-            <div class="text-center" *ngIf="sample && sample.length > 0">
+
+            <!-- Current and Next Item-->
+            <div class="text-center mt-2" *ngIf="sample && sample.length > 0">
               <div class="d-inline-block" *ngIf="currentIndex > 0">
                 <div class="big-fruit current">
                   {{(sample[currentIndex-1]).label}}
@@ -119,10 +124,10 @@
                   Next index: <strong>{{currentIndex + 1}}</strong>
                 </div>
               </div>
-
             </div>
+
             <!-- Progress -->
-            <div>
+            <div class="mt-2" *ngIf="sample && sample.length > 0">
               <div class="progress">
                 <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{'width': (100 * currentIndex / sample.length) + '%'}"></div>
               </div>

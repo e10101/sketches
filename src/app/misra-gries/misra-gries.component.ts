@@ -14,9 +14,10 @@ import {
   styleUrls: ['./misra-gries.component.scss']
 })
 export class MisraGriesComponent implements OnInit {
-  public fruits = '🍎🍐🍊🍋🍌🍉🍇🍓🍒🍑🍍🥝';
+  public fruits = '🍇🍈🍉🍊🍋🍌🍍🍎🍏🍐🍑🍒🍓🥝🍅🥥🥑🍆🥔🥕🌽🌶🥒🥦🍄🥜🌰';
+  public categorySize = 5;
   public _k = 5;
-  public sampleSize = 20;
+  public sampleSize = 200;
   public sample: Item[] = [];
 
   public fontSize = 32; // px
@@ -39,14 +40,22 @@ export class MisraGriesComponent implements OnInit {
   }
 
   public get fruitsList(): string[] {
-    return Array.from(this.fruits);
+    const list = Array.from(this.fruits).filter((ch) => {
+      return ch.charCodeAt(0) > 1000;
+    });
+
+    return _.uniq(list);
+  }
+
+  public get categoryList(): string[] {
+    return this.fruitsList.slice(0, this.categorySize);
   }
 
   public get realCounting() {
     const count = _.countBy(this.sample, 'label');
     const arr = Object.keys(count).map(key => ({ key, value: count[key] }));
 
-    const sorted = _.orderBy(arr, 'label', 'desc');
+    const sorted = _.orderBy(arr, 'value', 'desc');
     return sorted;
   }
 
@@ -62,7 +71,6 @@ export class MisraGriesComponent implements OnInit {
     const sample: Item[] = [];
     for (let i = 0; i < this.sampleSize; i++) {
       const label = _.sample(this.fruitsList);
-      console.log('label', label);
       sample.push(new Item(label, i + 1));
     }
 
@@ -86,14 +94,11 @@ export class MisraGriesComponent implements OnInit {
   }
 
   onNextStep() {
-    console.log('onNextStep');
     if (this.sample && this.sample.length <= this.currentIndex) {
       this.isAutoNext = false;
       return;
     }
     this.currentIndex++;
-
-    console.log('currentIndex', this.currentIndex);
 
     if (this.currentIndex > 0) {
       const index = this.currentIndex - 1;
@@ -108,7 +113,6 @@ export class MisraGriesComponent implements OnInit {
     if (this.isAutoNext) {
       clearInterval(this.autoNextTimer);
     } else {
-      console.log('timer now');
       if (this.autoNextTimer) {
         clearInterval(this.autoNextTimer);
       }
