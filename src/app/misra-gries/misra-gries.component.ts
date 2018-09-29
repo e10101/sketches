@@ -15,7 +15,7 @@ import {
 })
 export class MisraGriesComponent implements OnInit {
   public fruits = '🍇🍈🍉🍊🍋🍌🍍🍎🍏🍐🍑🍒🍓🥝🍅🥥🥑🍆🥔🥕🌽🌶🥒🥦🍄🥜🌰';
-  public categorySize = 5;
+  public categorySize = 6;
   public _k = 5;
   public sampleSize = 200;
   public sample: Item[] = [];
@@ -70,7 +70,7 @@ export class MisraGriesComponent implements OnInit {
   onGenerateSample() {
     const sample: Item[] = [];
     for (let i = 0; i < this.sampleSize; i++) {
-      const label = _.sample(this.fruitsList);
+      const label = _.sample(this.categoryList);
       sample.push(new Item(label, i + 1));
     }
 
