@@ -47,10 +47,16 @@
         <div class="card-body">
           <form>
             <div class="row">
-              <div class="col-auto">
+              <div class="col-auto pr-1">
                 <button class="btn btn-primary" (click)="onGenerateSample()">Generate</button>
               </div>
-              <div class="col-auto">
+              <div class="col-auto px-1">
+                <button class="btn btn-block" [ngClass]="{'btn-success': !isAutoNext, 'btn-secondary': isAutoNext}"
+                  (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
+                  {{isAutoNext? 'Stop' : 'Auto'}}
+                </button>
+              </div>
+              <div class="col-auto px-1">
                 <select class="custom-select" [(ngModel)]="sampleTypeOption" name="sampleType">
                   <option [ngValue]="option" *ngFor="let option of sampleTypeOptions;">
                     {{option.label}}
