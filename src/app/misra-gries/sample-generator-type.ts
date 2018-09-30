@@ -1,6 +1,7 @@
 export enum SampleType {
   RANDOM,
   REPEAT,
+  MAJORITY,
 }
 
 export class SampleGeneratorType {

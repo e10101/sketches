@@ -59,6 +59,7 @@ export class MisraGriesComponent implements OnInit {
   public sampleTypeOptions = [
     new SampleTypeOption('Random', SampleType.RANDOM),
     new SampleTypeOption('Repeat', SampleType.REPEAT),
+    new SampleTypeOption('Majority', SampleType.MAJORITY),
   ];
   public sampleTypeOption: SampleTypeOption = this.sampleTypeOptions[0];
 
@@ -100,7 +101,9 @@ export class MisraGriesComponent implements OnInit {
   ngOnInit(): void { }
 
   onGenerateSample() {
-    this.sample = SampleGenerator.gen(this.sampleSize, this.categoryList, new SampleGeneratorType(this.sampleTypeOption.type));
+    this.sample = SampleGenerator.gen(this.sampleSize, this.categoryList, new SampleGeneratorType(this.sampleTypeOption.type, {
+      k: this.k,
+    }));
 
     this.cleanIndexAndSketch();
   }

@@ -22,6 +22,9 @@ export class SampleGenerator {
       case SampleType.REPEAT:
         sample = SampleGenerator.genRepeat(sampleSize, categories);
         break;
+      case SampleType.MAJORITY:
+        sample = SampleGenerator.genMajority(sampleSize, categories, sampleType.options.k);
+        break;
       default:
         // Default use the random sample
         sample = SampleGenerator.genRandom(sampleSize, categories);
@@ -55,6 +58,25 @@ export class SampleGenerator {
       if (j >= categories.length) {
         j = 0;
       }
+    }
+
+    return sample;
+  }
+
+  public static genMajority(sampleSize: number, categories: string[], k: number) {
+    // K should not equal to 0
+    k = k > 0 ? k : 1;
+
+    let sample = SampleGenerator.genRandom(sampleSize, categories);
+
+    if (sample && sample.length > 0) {
+      const firstItem = sample[0];
+      const minCount = Math.ceil(sampleSize / k);
+
+      // Repeat the first sample item 'minCount' times.
+      sample = _.fill(sample, firstItem, 0, minCount);
+
+      sample = _.shuffle(sample);
     }
 
     return sample;
