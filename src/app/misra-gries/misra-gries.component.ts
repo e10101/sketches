@@ -62,6 +62,13 @@ export class MisraGriesComponent implements OnInit {
     new SampleTypeOption('Majority', SampleType.MAJORITY),
   ];
   public sampleTypeOption: SampleTypeOption = this.sampleTypeOptions[0];
+  public get isMajorityOptionNow(): boolean {
+    return this.sampleTypeOption.type === SampleType.MAJORITY;
+  }
+  public majorityCountOption = 1;
+  public get majorityOptions(): number[] {
+    return _.range(1, this.k + 1);
+  }
 
   public get k(): number {
     return this._k;
@@ -103,6 +110,7 @@ export class MisraGriesComponent implements OnInit {
   onGenerateSample() {
     this.sample = SampleGenerator.gen(this.sampleSize, this.categoryList, new SampleGeneratorType(this.sampleTypeOption.type, {
       k: this.k,
+      majorityCount: this.majorityCountOption,
     }));
 
     this.cleanIndexAndSketch();

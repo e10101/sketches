@@ -77,6 +77,15 @@
                   </option>
                 </select>
               </div>
+
+              <!-- Majority options -->
+              <div class="col-auto px-1" *ngIf="isMajorityOptionNow">
+                <select class="custom-select" [(ngModel)]="majorityCountOption" name="majorityCountOption">
+                  <option [ngValue]="option" *ngFor="let option of majorityOptions;">
+                    {{option}}
+                  </option>
+                </select>
+              </div>
             </div>
           </form>
 

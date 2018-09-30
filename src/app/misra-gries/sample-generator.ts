@@ -23,7 +23,7 @@ export class SampleGenerator {
         sample = SampleGenerator.genRepeat(sampleSize, categories);
         break;
       case SampleType.MAJORITY:
-        sample = SampleGenerator.genMajority(sampleSize, categories, sampleType.options.k);
+        sample = SampleGenerator.genMajority(sampleSize, categories, sampleType.options.k, sampleType.options.majorityCount);
         break;
       default:
         // Default use the random sample
@@ -63,21 +63,29 @@ export class SampleGenerator {
     return sample;
   }
 
-  public static genMajority(sampleSize: number, categories: string[], k: number) {
+  public static genMajority(sampleSize: number, categories: string[], k: number, majorityCount = 1) {
     // K should not equal to 0
     k = k > 0 ? k : 1;
 
     let sample = SampleGenerator.genRandom(sampleSize, categories);
 
+    const randCategories = _.shuffle(categories);
+
     if (sample && sample.length > 0) {
-      const firstItem = sample[0];
       const minCount = Math.ceil(sampleSize / k);
 
-      // Repeat the first sample item 'minCount' times.
-      sample = _.fill(sample, firstItem, 0, minCount);
+      for (let i = 0; i < majorityCount && i < randCategories.length; i++) {
+        const randItem = new Item(randCategories[i]);
+        // Repeat the first sample item 'minCount' times.
+        sample = _.fill(sample, randItem, i * minCount, (i + 1) * minCount);
+      }
 
       sample = _.shuffle(sample);
     }
+
+    sample = sample.map((item, idx) => {
+      return new Item(item.label, idx + 1);
+    });
 
     return sample;
   }
