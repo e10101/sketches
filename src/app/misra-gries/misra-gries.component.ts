@@ -10,6 +10,9 @@ import {
 import { SampleGenerator } from './sample-generator';
 import { SampleType, SampleGeneratorType } from './sample-generator-type';
 import { SpaceSaving } from './space-saving';
+import {
+  RealCounter,
+} from './real-counter';
 
 export class SampleTypeOption {
   label: string;
@@ -42,6 +45,7 @@ export class MisraGriesComponent implements OnInit {
 
   public sketch: MisraGries;
   public spaceSavingSketch: SpaceSaving;
+  public realCounter: RealCounter;
 
   public isAutoNext = false;
   public autoNextOffsetSeconds = 10;  // ms
@@ -78,6 +82,7 @@ export class MisraGriesComponent implements OnInit {
 
     this.sketch = new MisraGries(this.k);
     this.spaceSavingSketch = new SpaceSaving(this.k);
+    this.realCounter = new RealCounter();
   }
 
   public get fruitsList(): string[] {
@@ -103,6 +108,7 @@ export class MisraGriesComponent implements OnInit {
   constructor() {
     this.sketch = new MisraGries(this.k);
     this.spaceSavingSketch = new SpaceSaving(this.k);
+    this.realCounter = new RealCounter();
   }
 
   ngOnInit(): void { }
@@ -138,6 +144,7 @@ export class MisraGriesComponent implements OnInit {
 
       this.sketch.update(item);
       this.spaceSavingSketch.update(item);
+      this.realCounter.update(item);
     }
   }
 
@@ -166,6 +173,7 @@ export class MisraGriesComponent implements OnInit {
 
     this.sketch = new MisraGries(this.k);
     this.spaceSavingSketch = new SpaceSaving(this.k);
+    this.realCounter = new RealCounter();
 
     this.isAutoNext = false;
     clearInterval(this.autoNextTimer);

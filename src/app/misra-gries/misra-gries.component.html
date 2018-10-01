@@ -103,6 +103,18 @@
 
           <hr>
 
+          <div>
+            Current ({{realCounter.sumCounts}}):
+          </div>
+          <div [ngStyle]="{'font-size': fontSize + 'px'}">
+            <div *ngFor="let c of realCounter.filteredCounters()" class="d-inline-block">
+              <div>{{c.label}}</div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+            </div>
+          </div>
+
+          <hr>
+
           <div>Samples ({{sample.length}}):</div>
           <div [ngStyle]="{'font-size': fontSize + 'px'}">
             <div *ngFor="let s of sample" class="d-inline-block">
