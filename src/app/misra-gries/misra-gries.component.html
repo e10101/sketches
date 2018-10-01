@@ -242,7 +242,7 @@
           </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
-            <div *ngFor="let c of sketch.counters" class="d-inline-block">
+            <div *ngFor="let c of sketch.filteredCounters()" class="d-inline-block">
               <div>{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>
@@ -270,7 +270,7 @@
           </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
-            <div *ngFor="let c of spaceSavingSketch.counters" class="d-inline-block">
+            <div *ngFor="let c of spaceSavingSketch.filteredCounters()" class="d-inline-block">
               <div>{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>

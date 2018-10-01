@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import {
   Item,
 } from './item';
@@ -17,6 +19,14 @@ export class MisraGries {
     });
 
     return sum;
+  }
+
+  filteredCounters(sorted = true): Counter[] {
+    if (sorted) {
+      return _.orderBy(this.counters, 'count', 'desc');
+    }
+
+    return this.counters;
   }
 
   constructor(k = 5) {
