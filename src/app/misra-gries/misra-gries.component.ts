@@ -36,7 +36,7 @@ export class MisraGriesComponent implements OnInit {
     + '🍭🍮🍯🍼🥛☕🍵🍶🍾🍷🍸🍹🍺🍻🥂🥃🥤🥢🍽🍴🥄🔪🏺';
   public categorySize = 6;
   public _k = 5;
-  public sampleSize = 80;
+  public sampleSize = 100;
   public sample: Item[] = [];
 
   public fontSize = 32; // px
