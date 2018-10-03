@@ -64,6 +64,11 @@ export class MisraGriesComponent implements OnInit {
     samples: false,
   };
 
+  /**
+   * Highlight the index
+   */
+  public highlightIndex = -1;
+
   public sampleTypeOptions = [
     new SampleTypeOption('Random', SampleType.RANDOM),
     new SampleTypeOption('Repeat', SampleType.REPEAT),
@@ -177,6 +182,15 @@ export class MisraGriesComponent implements OnInit {
   onResetIndex() {
     this.cleanIndexAndSketch();
   }
+
+  public onHighlightIndex(idx: number) {
+    if (this.highlightIndex === idx) {
+      this.highlightIndex = -1;
+    } else {
+      this.highlightIndex = idx;
+    }
+  }
+
 
   private cleanIndexAndSketch() {
     // Reset the index

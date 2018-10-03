@@ -88,9 +88,15 @@
             Majority threshold: <strong>{{majorityThreshold}}</strong>
           </div>
 
+          <div>
+            Sample Summary: ({{sample.length}}):
+          </div>
+
           <div [ngStyle]="{'font-size': fontSize + 'px'}">
-            <div *ngFor="let c of realCounting" class="d-inline-block">
-              <div>{{c.key}}</div>
+            <div *ngFor="let c of realCounting; let idx = index;" class="d-inline-block" (click)="onHighlightIndex(idx)">
+              <div [ngClass]="{'highlight': highlightIndex === idx}">
+                {{c.key}}
+              </div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.value}}</div>
             </div>
           </div>
@@ -101,8 +107,10 @@
             Current ({{realCounter.sumCounts}}):
           </div>
           <div [ngStyle]="{'font-size': fontSize + 'px'}">
-            <div *ngFor="let c of realCounter.filteredCounters()" class="d-inline-block">
-              <div>{{c.label}}</div>
+            <div *ngFor="let c of realCounter.filteredCounters(); let idx = index;" class="d-inline-block" (click)="onHighlightIndex(idx)">
+              <div [ngClass]="{'highlight': highlightIndex === idx}">
+                {{c.label}}
+              </div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>
           </div>
@@ -260,8 +268,8 @@
           </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
-            <div *ngFor="let c of sketch.filteredCounters()" class="d-inline-block">
-              <div class="item border rounded border-secondary m-2">{{c.label}}</div>
+            <div *ngFor="let c of sketch.filteredCounters(); let idx = index;" class="d-inline-block" (click)="onHighlightIndex(idx)">
+              <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>
             <div *ngFor="let c of sketch.emptyCounters" class="d-inline-block">
@@ -301,8 +309,9 @@
           </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
-            <div *ngFor="let c of spaceSavingSketch.filteredCounters()" class="d-inline-block">
-              <div class="item border rounded border-secondary m-2">{{c.label}}</div>
+            <div *ngFor="let c of spaceSavingSketch.filteredCounters(); let idx = index;" class="d-inline-block"
+              (click)="onHighlightIndex(idx)">
+              <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>
             <div *ngFor="let c of spaceSavingSketch.emptyCounters" class="d-inline-block">
@@ -354,8 +363,9 @@
           </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
-            <div *ngFor="let c of unbiasedSpaceSaving.filteredCounters()" class="d-inline-block">
-              <div class="item border rounded border-secondary m-2">{{c.label}}</div>
+            <div *ngFor="let c of unbiasedSpaceSaving.filteredCounters(); let idx = index;" class="d-inline-block"
+              (click)="onHighlightIndex(idx)">
+              <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>
             <div *ngFor="let c of unbiasedSpaceSaving.emptyCounters" class="d-inline-block">
