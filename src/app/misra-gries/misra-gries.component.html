@@ -258,8 +258,16 @@
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
             <div *ngFor="let c of sketch.filteredCounters()" class="d-inline-block">
-              <div>{{c.label}}</div>
+              <div class="item border rounded border-secondary m-2">{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+            </div>
+            <div *ngFor="let c of sketch.emptyCounters" class="d-inline-block">
+              <div class="item border rounded border-secondary m-2">
+                &nbsp;
+              </div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                &nbsp;
+              </div>
             </div>
           </div>
         </div>
@@ -286,8 +294,16 @@
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
             <div *ngFor="let c of spaceSavingSketch.filteredCounters()" class="d-inline-block">
-              <div>{{c.label}}</div>
+              <div class="item border rounded border-secondary m-2">{{c.label}}</div>
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+            </div>
+            <div *ngFor="let c of spaceSavingSketch.emptyCounters" class="d-inline-block">
+              <div class="item border rounded border-secondary m-2">
+                &nbsp;
+              </div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                &nbsp;
+              </div>
             </div>
           </div>
         </div>

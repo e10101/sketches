@@ -28,6 +28,14 @@ export class SpaceSaving {
     return this.counters;
   }
 
+  get emptyCounters(): Counter[] {
+    const count = this.k - this.counters.length;
+
+    return _.range(0, count).map((idx) => {
+      return new Counter();
+    });
+  }
+
   constructor(k = 5) {
     this.k = k;
     this.counters = [];
