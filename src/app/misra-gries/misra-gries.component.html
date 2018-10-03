@@ -7,7 +7,7 @@
   </h1> -->
 
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       <div class="card">
         <div class="card-header">
           <h5 class="float-left">Sample Configuration</h5>
@@ -132,19 +132,9 @@
           </div>
         </div>
       </div>
-
-      <div class="mt-3">
-        <div>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button class="btn btn-sm btn-light" (click)="onSmallFont()">-</button>
-            <button class="btn btn-sm btn-light" (click)="onLargeFont()">+</button>
-          </div>
-          font-size: {{fontSize}}px
-        </div>
-      </div>
     </div>
 
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       <div class="card">
         <div class="card-header">
           <h5 class="float-left">Algorithms Configuration</h5>
@@ -177,7 +167,7 @@
           <form>
             <!-- Controls -->
             <div class="row">
-              <div class="col-auto pr-1">
+              <div class="col-auto pr-1 mb-2">
                 <button class="btn btn-block btn-primary" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
               </div>
               <div class="col-auto px-1">
@@ -378,6 +368,16 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 mt-3">
+      <div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button class="btn btn-sm btn-light" (click)="onSmallFont()">-</button>
+          <button class="btn btn-sm btn-light" (click)="onLargeFont()">+</button>
+        </div>
+        font-size: {{fontSize}}px
       </div>
     </div>
   </div>
