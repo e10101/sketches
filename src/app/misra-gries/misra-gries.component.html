@@ -239,6 +239,8 @@
         <h5 class="card-header">
           Misra-Gries
           <div class="float-right">
+            <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
+
             <button class="btn btn-sm btn-outline-secondary" (click)="hide.mg = !hide.mg">H/S</button>
           </div>
         </h5>
@@ -253,7 +255,7 @@
             Decrement count: <strong>{{sketch.decrementCount}}</strong>
           </div>
           <div>
-            Sum counts: <strong>{{sketch.sumCounts}}</strong>
+            Sum count of counters: <strong>{{sketch.sumCounts}}</strong>
           </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
@@ -278,6 +280,8 @@
         <h5 class="card-header">
           Space Saving
           <div class="float-right">
+            <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
+
             <button class="btn btn-sm btn-outline-secondary" (click)="hide.ss = !hide.ss">H/S</button>
           </div>
         </h5>
@@ -289,7 +293,7 @@
             Counters' size: <strong>{{spaceSavingSketch.counters.length}}</strong>
           </div>
           <div>
-            Sum counts: <strong>{{spaceSavingSketch.sumCounts}}</strong>
+            Sum count of counters: <strong>{{spaceSavingSketch.sumCounts}}</strong>
           </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
@@ -298,6 +302,59 @@
               <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
             </div>
             <div *ngFor="let c of spaceSavingSketch.emptyCounters" class="d-inline-block">
+              <div class="item border rounded border-secondary m-2">
+                &nbsp;
+              </div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unbiased Space Saving -->
+      <div class="card mt-3">
+        <h5 class="card-header">
+          Unbiased Space Saving
+          <div class="float-right">
+            <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
+
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.uss = !hide.uss">H/S</button>
+          </div>
+        </h5>
+        <div class="card-body" *ngIf="!hide.uss">
+          <div>
+            k: <strong>{{unbiasedSpaceSaving.k}}</strong>
+          </div>
+          <div>
+            Counters' size: <strong>{{unbiasedSpaceSaving.counters.length}}</strong>
+          </div>
+          <div>
+            Random replacement count: <strong>{{unbiasedSpaceSaving.randomReplaceCount}}</strong>
+          </div>
+          <div>
+            Is current item replaced?
+            <span *ngIf="unbiasedSpaceSaving.isPreviousItemReplaced" class="badge badge-pill badge-success">
+              Replaced
+            </span>
+            <span *ngIf="!unbiasedSpaceSaving.isPreviousItemReplaced" class="badge badge-pill badge-secondary">
+              Not Replaced
+            </span>
+            <span *ngIf="unbiasedSpaceSaving.minCounter.count > 0" class="badge badge-pill badge-secondary ml-1">
+              Min: {{unbiasedSpaceSaving.minCounter.count}}
+            </span>
+          </div>
+          <div>
+            Sum count of counters: <strong>{{unbiasedSpaceSaving.sumCounts}}</strong>
+          </div>
+
+          <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
+            <div *ngFor="let c of unbiasedSpaceSaving.filteredCounters()" class="d-inline-block">
+              <div class="item border rounded border-secondary m-2">{{c.label}}</div>
+              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+            </div>
+            <div *ngFor="let c of unbiasedSpaceSaving.emptyCounters" class="d-inline-block">
               <div class="item border rounded border-secondary m-2">
                 &nbsp;
               </div>

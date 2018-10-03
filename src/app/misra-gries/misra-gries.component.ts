@@ -13,6 +13,7 @@ import { SpaceSaving } from './space-saving';
 import {
   RealCounter,
 } from './real-counter';
+import { UnbiasedSpaceSaving } from './unbiased-space-saving';
 
 export class SampleTypeOption {
   label: string;
@@ -46,6 +47,7 @@ export class MisraGriesComponent implements OnInit {
   public sketch: MisraGries;
   public spaceSavingSketch: SpaceSaving;
   public realCounter: RealCounter;
+  public unbiasedSpaceSaving: UnbiasedSpaceSaving;
 
   public isAutoNext = false;
   public autoNextOffsetSeconds = 10;  // ms
@@ -58,6 +60,7 @@ export class MisraGriesComponent implements OnInit {
     operation: false,
     mg: false,
     ss: false,
+    uss: false,
   };
 
   public sampleTypeOptions = [
@@ -83,6 +86,7 @@ export class MisraGriesComponent implements OnInit {
     this.sketch = new MisraGries(this.k);
     this.spaceSavingSketch = new SpaceSaving(this.k);
     this.realCounter = new RealCounter();
+    this.unbiasedSpaceSaving = new UnbiasedSpaceSaving(this.k);
   }
 
   public get fruitsList(): string[] {
@@ -109,6 +113,7 @@ export class MisraGriesComponent implements OnInit {
     this.sketch = new MisraGries(this.k);
     this.spaceSavingSketch = new SpaceSaving(this.k);
     this.realCounter = new RealCounter();
+    this.unbiasedSpaceSaving = new UnbiasedSpaceSaving(this.k);
   }
 
   ngOnInit(): void { }
@@ -145,6 +150,7 @@ export class MisraGriesComponent implements OnInit {
       this.sketch.update(item);
       this.spaceSavingSketch.update(item);
       this.realCounter.update(item);
+      this.unbiasedSpaceSaving.update(item);
     }
   }
 
@@ -174,6 +180,7 @@ export class MisraGriesComponent implements OnInit {
     this.sketch = new MisraGries(this.k);
     this.spaceSavingSketch = new SpaceSaving(this.k);
     this.realCounter = new RealCounter();
+    this.unbiasedSpaceSaving = new UnbiasedSpaceSaving(this.k);
 
     this.isAutoNext = false;
     clearInterval(this.autoNextTimer);
