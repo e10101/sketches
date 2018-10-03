@@ -93,6 +93,9 @@
           </form>
 
           <hr>
+          <div *ngIf="sample && sample.length > 0">
+            Majority threshold: <strong>{{majorityThreshold}}</strong>
+          </div>
 
           <div [ngStyle]="{'font-size': fontSize + 'px'}">
             <div *ngFor="let c of realCounting" class="d-inline-block">
@@ -252,6 +255,9 @@
             Counters' size: <strong>{{sketch.counters.length}}</strong>
           </div>
           <div>
+            Majority threshold: <strong>{{sketch.majorityThreshold}}</strong>
+          </div>
+          <div>
             Decrement count: <strong>{{sketch.decrementCount}}</strong>
           </div>
           <div>
@@ -291,6 +297,9 @@
           </div>
           <div>
             Counters' size: <strong>{{spaceSavingSketch.counters.length}}</strong>
+          </div>
+          <div>
+            Majority threshold: <strong>{{sketch.majorityThreshold}}</strong>
           </div>
           <div>
             Sum count of counters: <strong>{{spaceSavingSketch.sumCounts}}</strong>

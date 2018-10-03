@@ -10,6 +10,13 @@ import {
 export class SpaceSaving {
   counters: Counter[];
   k: number;
+  updatesCount = 0;
+
+  get majorityThreshold(): number {
+    const k = this.k > 0 ? this.k : 1;
+
+    return Math.floor(this.updatesCount / k);
+  }
 
   get sumCounts(): number {
     let sum = 0;
@@ -39,6 +46,8 @@ export class SpaceSaving {
   constructor(k = 5) {
     this.k = k;
     this.counters = [];
+
+    this.updatesCount = 0;
   }
 
   update(item: Item, increment = 1) {
@@ -51,6 +60,8 @@ export class SpaceSaving {
     } else {
       this.replaceMinCounter(item);
     }
+
+    this.updatesCount += increment;
   }
 
   estimate(item: Item) {

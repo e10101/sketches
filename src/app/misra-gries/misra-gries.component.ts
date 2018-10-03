@@ -109,6 +109,10 @@ export class MisraGriesComponent implements OnInit {
     return sorted;
   }
 
+  public get majorityThreshold(): number {
+    return Math.floor(this.sample.length / this.k);
+  }
+
   constructor() {
     this.sketch = new MisraGries(this.k);
     this.spaceSavingSketch = new SpaceSaving(this.k);

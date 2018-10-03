@@ -72,7 +72,7 @@ export class SampleGenerator {
     const randCategories = _.shuffle(categories);
 
     if (sample && sample.length > 0) {
-      const minCount = Math.ceil(sampleSize / k);
+      const minCount = Math.floor(sampleSize / k);
 
       for (let i = 0; i < majorityCount && i < randCategories.length; i++) {
         const randItem = new Item(randCategories[i]);
