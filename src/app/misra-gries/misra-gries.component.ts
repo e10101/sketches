@@ -61,6 +61,7 @@ export class MisraGriesComponent implements OnInit {
     mg: false,
     ss: false,
     uss: false,
+    samples: false,
   };
 
   public sampleTypeOptions = [

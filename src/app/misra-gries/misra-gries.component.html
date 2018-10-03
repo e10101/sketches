@@ -118,8 +118,12 @@
 
           <hr>
 
-          <div>Samples ({{sample.length}}):</div>
-          <div [ngStyle]="{'font-size': fontSize + 'px'}">
+          <div>
+            Samples ({{sample.length}}):
+            <button class="btn btn-sm d-inline-block btn-outline-secondary" (click)="hide.samples = !hide.samples">H/S</button>
+          </div>
+
+          <div *ngIf="!hide.samples" [ngStyle]="{'font-size': fontSize + 'px'}">
             <div *ngFor="let s of sample" class="d-inline-block">
               <div *ngIf="currentIndex != s.index">
                 {{s.label}}
