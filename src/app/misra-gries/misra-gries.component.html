@@ -7,7 +7,7 @@
   </h1> -->
 
   <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-4">
       <div class="card">
         <div class="card-header">
           <h5 class="float-left">Sample Configuration</h5>
@@ -40,6 +40,112 @@
               <label for="Size">Sample Size ({{sampleSize}})</label>
               <input type="range" class="custom-range" [(ngModel)]="sampleSize" id="sampleSize" name="sampleSize" min="1"
                 max="2000">
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <!-- Config -->
+      <div class="card mt-3">
+        <div class="card-header">
+          <h5 class="float-left">Algorithms Configuration</h5>
+          <span class="ml-2" *ngIf="hide.sketches">
+            k(MG): <strong>{{k}}</strong>,
+            k(SS): <strong>{{kSS}}</strong>
+          </span>
+          <div class="float-right">
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.sketches = !hide.sketches">H/S</button>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!hide.sketches">
+          <form>
+            <div class="form-group">
+              <label for="k"><strong>k for MG</strong> ({{k}})</label>
+              <input type="range" class="custom-range" [(ngModel)]="k" id="k" name="k" min="1" [max]="fruitsList.length">
+              <small class="form-text text-muted">The Misra-Gries algorithm counters' size.</small>
+            </div>
+            <div class="form-group">
+              <label for="k-ss"><strong>k for SS</strong> ({{kSS}})</label>
+              <input type="range" class="custom-range" [(ngModel)]="kSS" id="k-ss" name="k-ss" min="1" [max]="fruitsList.length">
+              <small class="form-text text-muted">The Space Saving algorithm counters' size.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Operation -->
+      <div class="card mt-3">
+        <h5 class="card-header">
+          Operation
+          <div class="float-right">
+            <button class="btn btn-sm btn-outline-secondary" (click)="hide.operation = !hide.operation">H/S</button>
+          </div>
+        </h5>
+        <div class="card-body" *ngIf="!hide.operation">
+          <form>
+            <!-- Controls -->
+            <div class="row">
+              <div class="col-auto pr-1 mb-2">
+                <button class="btn btn-block btn-primary" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
+              </div>
+              <div class="col-auto px-1">
+                <button class="btn btn-block" [ngClass]="{'btn-success': !isAutoNext, 'btn-secondary': isAutoNext}"
+                  (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
+                  {{isAutoNext? 'Stop' : 'Auto'}}
+                </button>
+              </div>
+              <div class="col-auto px-1">
+                <select class="custom-select" [(ngModel)]="autoNextOffsetSeconds" name="speed">
+                  <option value="500">Speed: Walking</option>
+                  <option value="100">Speed: Running</option>
+                  <option value="10">Speed: Biking</option>
+                  <option value="1">Speed: Flying</option>
+                </select>
+              </div>
+              <div class="col-auto px-1">
+                <button class="btn btn-block btn-danger" (click)="onResetIndex()">Reset Index</button>
+              </div>
+            </div>
+
+            <!-- Current and Next Item-->
+            <div class="row mt-2 text-center" *ngIf="sample && sample.length > 0">
+              <!-- Current -->
+              <div class="col-md-6">
+                <div *ngIf="currentIndex > 0" class="rounded">
+                  <div class="step-title">
+                    <span class="badge badge-pill badge-primary">Current</span>
+                  </div>
+                  <div class="rounded big-fruit current">
+                    {{(sample[currentIndex-1]).label}}
+                  </div>
+                  <div class="text-muted ">
+                    Index: <strong>{{currentIndex}}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Next -->
+              <div class="col-md-6">
+                <div *ngIf="sample.length > currentIndex" class="rounded">
+                  <div class="step-title">
+                    <span class="badge badge-pill badge-success">Next</span>
+                  </div>
+                  <div class="rounded big-fruit next">
+                    {{(sample[currentIndex]).label}}
+                  </div>
+                  <div class="text-muted">
+                    Index: <strong>{{currentIndex + 1}}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="mt-2" *ngIf="sample && sample.length > 0">
+              <div class="progress">
+                <div class="progress-bar" style="transition: none;" role="progressbar" [ngStyle]="{'width': (100 * currentIndex / sample.length) + '%'}"></div>
+              </div>
             </div>
           </form>
         </div>
@@ -142,249 +248,154 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="float-left">Algorithms Configuration</h5>
-          <span class="ml-2" *ngIf="hide.sketches">
-            k(MG): <strong>{{k}}</strong>,
-            k(SS): <strong>{{kSS}}</strong>
-          </span>
-          <div class="float-right">
-            <button class="btn btn-sm btn-outline-secondary" (click)="hide.sketches = !hide.sketches">H/S</button>
-          </div>
-        </div>
-        <div class="card-body" *ngIf="!hide.sketches">
-          <form>
-            <div class="form-group">
-              <label for="k"><strong>k for MG</strong> ({{k}})</label>
-              <input type="range" class="custom-range" [(ngModel)]="k" id="k" name="k" min="1" [max]="fruitsList.length">
-              <small class="form-text text-muted">The Misra-Gries algorithm counters' size.</small>
-            </div>
-            <div class="form-group">
-              <label for="k-ss"><strong>k for SS</strong> ({{kSS}})</label>
-              <input type="range" class="custom-range" [(ngModel)]="kSS" id="k-ss" name="k-ss" min="1" [max]="fruitsList.length">
-              <small class="form-text text-muted">The Space Saving algorithm counters' size.</small>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div class="col-12 col-md-8">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <!-- Misra-Gries -->
+          <div class="card">
+            <h5 class="card-header">
+              Misra-Gries
+              <div class="float-right">
+                <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
 
-      <div class="card mt-3">
-        <h5 class="card-header">
-          Operation
-          <div class="float-right">
-            <button class="btn btn-sm btn-outline-secondary" (click)="hide.operation = !hide.operation">H/S</button>
-          </div>
-        </h5>
-        <div class="card-body" *ngIf="!hide.operation">
-          <form>
-            <!-- Controls -->
-            <div class="row">
-              <div class="col-auto pr-1 mb-2">
-                <button class="btn btn-block btn-primary" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="hide.mg = !hide.mg">H/S</button>
               </div>
-              <div class="col-auto px-1">
-                <button class="btn btn-block" [ngClass]="{'btn-success': !isAutoNext, 'btn-secondary': isAutoNext}"
-                  (click)="onStartPause()" [disabled]="!this.sample || this.sample.length <= 0">
-                  {{isAutoNext? 'Stop' : 'Auto'}}
-                </button>
+            </h5>
+            <div class="card-body" *ngIf="!hide.mg">
+              <div>
+                k: <strong>{{sketch.k}}</strong>
               </div>
-              <div class="col-auto px-1">
-                <select class="custom-select" [(ngModel)]="autoNextOffsetSeconds" name="speed">
-                  <option value="500">Speed: Walking</option>
-                  <option value="100">Speed: Running</option>
-                  <option value="10">Speed: Biking</option>
-                  <option value="1">Speed: Flying</option>
-                </select>
+              <div>
+                Counters' size: <strong>{{sketch.counters.length}}</strong>
               </div>
-              <div class="col-auto px-1">
-                <button class="btn btn-block btn-danger" (click)="onResetIndex()">Reset Index</button>
+              <div>
+                Majority threshold: <strong>{{sketch.majorityThreshold}}</strong>
               </div>
-            </div>
+              <div>
+                Decrement count: <strong>{{sketch.decrementCount}}</strong>
+              </div>
+              <div>
+                Sum count of counters: <strong>{{sketch.sumCounts}}</strong>
+              </div>
 
-            <!-- Current and Next Item-->
-            <div class="row mt-2 text-center" *ngIf="sample && sample.length > 0">
-              <!-- Current -->
-              <div class="col-md-6">
-                <div *ngIf="currentIndex > 0" class="rounded">
-                  <div class="step-title">
-                    <span class="badge badge-pill badge-primary">Current</span>
-                  </div>
-                  <div class="rounded big-fruit current">
-                    {{(sample[currentIndex-1]).label}}
-                  </div>
-                  <div class="text-muted ">
-                    Index: <strong>{{currentIndex}}</strong>
-                  </div>
+              <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
+                <div *ngFor="let c of sketch.filteredCounters(); let idx = index;" class="d-inline-block" (click)="onHighlightIndex(idx)">
+                  <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
                 </div>
-              </div>
-
-              <!-- Next -->
-              <div class="col-md-6">
-                <div *ngIf="sample.length > currentIndex" class="rounded">
-                  <div class="step-title">
-                    <span class="badge badge-pill badge-success">Next</span>
+                <div *ngFor="let c of sketch.emptyCounters" class="d-inline-block">
+                  <div class="item border rounded border-secondary m-2">
+                    &nbsp;
                   </div>
-                  <div class="rounded big-fruit next">
-                    {{(sample[currentIndex]).label}}
-                  </div>
-                  <div class="text-muted">
-                    Index: <strong>{{currentIndex + 1}}</strong>
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                    &nbsp;
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Progress -->
-            <div class="mt-2" *ngIf="sample && sample.length > 0">
-              <div class="progress">
-                <div class="progress-bar" style="transition: none;" role="progressbar" [ngStyle]="{'width': (100 * currentIndex / sample.length) + '%'}"></div>
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
+        <div class="col-12 col-md-6">
+          <!-- Space Saving -->
+          <div class="card">
+            <h5 class="card-header">
+              Space Saving
+              <div class="float-right">
+                <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
 
-      <!-- Misra-Gries -->
-      <div class="card mt-3">
-        <h5 class="card-header">
-          Misra-Gries
-          <div class="float-right">
-            <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
-
-            <button class="btn btn-sm btn-outline-secondary" (click)="hide.mg = !hide.mg">H/S</button>
-          </div>
-        </h5>
-        <div class="card-body" *ngIf="!hide.mg">
-          <div>
-            k: <strong>{{sketch.k}}</strong>
-          </div>
-          <div>
-            Counters' size: <strong>{{sketch.counters.length}}</strong>
-          </div>
-          <div>
-            Majority threshold: <strong>{{sketch.majorityThreshold}}</strong>
-          </div>
-          <div>
-            Decrement count: <strong>{{sketch.decrementCount}}</strong>
-          </div>
-          <div>
-            Sum count of counters: <strong>{{sketch.sumCounts}}</strong>
-          </div>
-
-          <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
-            <div *ngFor="let c of sketch.filteredCounters(); let idx = index;" class="d-inline-block" (click)="onHighlightIndex(idx)">
-              <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
-              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
-            </div>
-            <div *ngFor="let c of sketch.emptyCounters" class="d-inline-block">
-              <div class="item border rounded border-secondary m-2">
-                &nbsp;
+                <button class="btn btn-sm btn-outline-secondary" (click)="hide.ss = !hide.ss">H/S</button>
               </div>
-              <div style="font-size: 16px; text-align: center; font-weight: bold;">
-                &nbsp;
+            </h5>
+            <div class="card-body" *ngIf="!hide.ss">
+              <div>
+                k: <strong>{{spaceSavingSketch.k}}</strong>
+              </div>
+              <div>
+                Counters' size: <strong>{{spaceSavingSketch.counters.length}}</strong>
+              </div>
+              <div>
+                Majority threshold: <strong>{{sketch.majorityThreshold}}</strong>
+              </div>
+              <div>
+                Sum count of counters: <strong>{{spaceSavingSketch.sumCounts}}</strong>
+              </div>
+
+              <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
+                <div *ngFor="let c of spaceSavingSketch.filteredCounters(); let idx = index;" class="d-inline-block"
+                  (click)="onHighlightIndex(idx)">
+                  <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+                </div>
+                <div *ngFor="let c of spaceSavingSketch.emptyCounters" class="d-inline-block">
+                  <div class="item border rounded border-secondary m-2">
+                    &nbsp;
+                  </div>
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                    &nbsp;
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="col-12 col-md-6">
+          <!-- Unbiased Space Saving -->
+          <div class="card mt-3">
+            <h5 class="card-header">
+              Unbiased Space Saving
+              <div class="float-right">
+                <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
 
-      <!-- Space Saving -->
-      <div class="card mt-3">
-        <h5 class="card-header">
-          Space Saving
-          <div class="float-right">
-            <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
-
-            <button class="btn btn-sm btn-outline-secondary" (click)="hide.ss = !hide.ss">H/S</button>
-          </div>
-        </h5>
-        <div class="card-body" *ngIf="!hide.ss">
-          <div>
-            k: <strong>{{spaceSavingSketch.k}}</strong>
-          </div>
-          <div>
-            Counters' size: <strong>{{spaceSavingSketch.counters.length}}</strong>
-          </div>
-          <div>
-            Majority threshold: <strong>{{sketch.majorityThreshold}}</strong>
-          </div>
-          <div>
-            Sum count of counters: <strong>{{spaceSavingSketch.sumCounts}}</strong>
-          </div>
-
-          <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
-            <div *ngFor="let c of spaceSavingSketch.filteredCounters(); let idx = index;" class="d-inline-block"
-              (click)="onHighlightIndex(idx)">
-              <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
-              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
-            </div>
-            <div *ngFor="let c of spaceSavingSketch.emptyCounters" class="d-inline-block">
-              <div class="item border rounded border-secondary m-2">
-                &nbsp;
+                <button class="btn btn-sm btn-outline-secondary" (click)="hide.uss = !hide.uss">H/S</button>
               </div>
-              <div style="font-size: 16px; text-align: center; font-weight: bold;">
-                &nbsp;
+            </h5>
+            <div class="card-body" *ngIf="!hide.uss">
+              <div>
+                k: <strong>{{unbiasedSpaceSaving.k}}</strong>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Unbiased Space Saving -->
-      <div class="card mt-3">
-        <h5 class="card-header">
-          Unbiased Space Saving
-          <div class="float-right">
-            <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
-
-            <button class="btn btn-sm btn-outline-secondary" (click)="hide.uss = !hide.uss">H/S</button>
-          </div>
-        </h5>
-        <div class="card-body" *ngIf="!hide.uss">
-          <div>
-            k: <strong>{{unbiasedSpaceSaving.k}}</strong>
-          </div>
-          <div>
-            Counters' size: <strong>{{unbiasedSpaceSaving.counters.length}}</strong>
-          </div>
-          <div>
-            Random replacement count: <strong>{{unbiasedSpaceSaving.randomReplaceCount}}</strong>
-          </div>
-          <div>
-            Is current item replaced?
-            <span *ngIf="unbiasedSpaceSaving.isPreviousItemReplaced" class="badge badge-pill badge-success">
-              Replaced
-            </span>
-            <span *ngIf="!unbiasedSpaceSaving.isPreviousItemReplaced" class="badge badge-pill badge-secondary">
-              Not Replaced
-            </span>
-            <span *ngIf="unbiasedSpaceSaving.minCounter.count > 0" class="badge badge-pill badge-secondary ml-1">
-              Min: {{unbiasedSpaceSaving.minCounter.count}}
-            </span>
-          </div>
-          <div>
-            Sum count of counters: <strong>{{unbiasedSpaceSaving.sumCounts}}</strong>
-          </div>
-
-          <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
-            <div *ngFor="let c of unbiasedSpaceSaving.filteredCounters(); let idx = index;" class="d-inline-block"
-              (click)="onHighlightIndex(idx)">
-              <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
-              <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
-            </div>
-            <div *ngFor="let c of unbiasedSpaceSaving.emptyCounters" class="d-inline-block">
-              <div class="item border rounded border-secondary m-2">
-                &nbsp;
+              <div>
+                Counters' size: <strong>{{unbiasedSpaceSaving.counters.length}}</strong>
               </div>
-              <div style="font-size: 16px; text-align: center; font-weight: bold;">
-                &nbsp;
+              <div>
+                Random replacement count: <strong>{{unbiasedSpaceSaving.randomReplaceCount}}</strong>
+              </div>
+              <div>
+                Is current item replaced?
+                <span *ngIf="unbiasedSpaceSaving.isPreviousItemReplaced" class="badge badge-pill badge-success">
+                  Replaced
+                </span>
+                <span *ngIf="!unbiasedSpaceSaving.isPreviousItemReplaced" class="badge badge-pill badge-secondary">
+                  Not Replaced
+                </span>
+                <span *ngIf="unbiasedSpaceSaving.minCounter.count > 0" class="badge badge-pill badge-secondary ml-1">
+                  Min: {{unbiasedSpaceSaving.minCounter.count}}
+                </span>
+              </div>
+              <div>
+                Sum count of counters: <strong>{{unbiasedSpaceSaving.sumCounts}}</strong>
+              </div>
+
+              <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
+                <div *ngFor="let c of unbiasedSpaceSaving.filteredCounters(); let idx = index;" class="d-inline-block"
+                  (click)="onHighlightIndex(idx)">
+                  <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+                </div>
+                <div *ngFor="let c of unbiasedSpaceSaving.emptyCounters" class="d-inline-block">
+                  <div class="item border rounded border-secondary m-2">
+                    &nbsp;
+                  </div>
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                    &nbsp;
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
     </div>
 
     <div class="col-12 col-md-6 mt-3">

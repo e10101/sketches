@@ -51,18 +51,19 @@ export class MisraGriesComponent implements OnInit {
   public unbiasedSpaceSaving: UnbiasedSpaceSaving;
 
   public isAutoNext = false;
-  public autoNextOffsetSeconds = 10;  // ms
+  public autoNextOffsetSeconds = 1;  // ms
   private autoNextTimer = null;
 
   public hide = {
-    config: false,
+    config: true,
     stream: false,
-    sketches: false,
+    sketches: true,
     operation: false,
     mg: false,
     ss: false,
     uss: false,
-    samples: false,
+    samples: true,
+    rmg: false,
   };
 
   /**

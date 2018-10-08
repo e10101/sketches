@@ -10,7 +10,7 @@ import {
 export class UnbiasedSpaceSaving {
   counters: Counter[];
   k: number;
-  randomReplaceCount: 0;
+  randomReplaceCount = 0;
   isPreviousItemReplaced = false;
 
   private _minCounter: Counter;
