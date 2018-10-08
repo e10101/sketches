@@ -147,7 +147,8 @@
         <div class="card-header">
           <h5 class="float-left">Algorithms Configuration</h5>
           <span class="ml-2" *ngIf="hide.sketches">
-            k: <strong>{{k}}</strong>
+            k(MG): <strong>{{k}}</strong>,
+            k(SS): <strong>{{kSS}}</strong>
           </span>
           <div class="float-right">
             <button class="btn btn-sm btn-outline-secondary" (click)="hide.sketches = !hide.sketches">H/S</button>
@@ -156,9 +157,14 @@
         <div class="card-body" *ngIf="!hide.sketches">
           <form>
             <div class="form-group">
-              <label for="k"><strong>k</strong> ({{k}})</label>
+              <label for="k"><strong>k for MG</strong> ({{k}})</label>
               <input type="range" class="custom-range" [(ngModel)]="k" id="k" name="k" min="1" [max]="fruitsList.length">
-              <small class="form-text text-muted">The counters size.</small>
+              <small class="form-text text-muted">The Misra-Gries algorithm counters' size.</small>
+            </div>
+            <div class="form-group">
+              <label for="k-ss"><strong>k for SS</strong> ({{kSS}})</label>
+              <input type="range" class="custom-range" [(ngModel)]="kSS" id="k-ss" name="k-ss" min="1" [max]="fruitsList.length">
+              <small class="form-text text-muted">The Space Saving algorithm counters' size.</small>
             </div>
           </form>
         </div>

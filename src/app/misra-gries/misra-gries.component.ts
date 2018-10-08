@@ -35,8 +35,9 @@ export class MisraGriesComponent implements OnInit {
     + '🥒🥦🍄🥜🌰🍞🥐🥖🥨🥞🧀🍖🍗🥩🥓🍔🍟🍕🌭🥪🌮🌯🥙🥚🍳🥘🍲🥣🥗🍿'
     + '🥫🍱🍘🍙🍚🍛🍜🍝🍠🍢🍣🍤🍥🍡🥟🥠🥡🦀🦐🦑🍦🍧🍨🍩🍪🎂🍰🥧🍫🍬'
     + '🍭🍮🍯🍼🥛☕🍵🍶🍾🍷🍸🍹🍺🍻🥂🥃🥤🥢🍽🍴🥄🔪🏺';
-  public categorySize = 6;
+  public categorySize = 7;
   public _k = 5;
+  public _kSS = 6;
   public sampleSize = 100;
   public sample: Item[] = [];
 
@@ -89,11 +90,17 @@ export class MisraGriesComponent implements OnInit {
   public set k(val: number) {
     this._k = val;
 
-    this.sketch = new MisraGries(this.k);
-    this.spaceSavingSketch = new SpaceSaving(this.k);
-    this.realCounter = new RealCounter();
-    this.unbiasedSpaceSaving = new UnbiasedSpaceSaving(this.k);
+    this.reCreateSketches();
   }
+  public get kSS(): number {
+    return this._kSS;
+  }
+  public set kSS(val: number) {
+    this._kSS = val;
+
+    this.reCreateSketches();
+  }
+
 
   public get fruitsList(): string[] {
     const list = Array.from(this.fruits).filter((ch) => {
@@ -120,10 +127,7 @@ export class MisraGriesComponent implements OnInit {
   }
 
   constructor() {
-    this.sketch = new MisraGries(this.k);
-    this.spaceSavingSketch = new SpaceSaving(this.k);
-    this.realCounter = new RealCounter();
-    this.unbiasedSpaceSaving = new UnbiasedSpaceSaving(this.k);
+    this.reCreateSketches();
   }
 
   ngOnInit(): void { }
@@ -196,13 +200,17 @@ export class MisraGriesComponent implements OnInit {
     // Reset the index
     this.currentIndex = 0;
 
-    this.sketch = new MisraGries(this.k);
-    this.spaceSavingSketch = new SpaceSaving(this.k);
-    this.realCounter = new RealCounter();
-    this.unbiasedSpaceSaving = new UnbiasedSpaceSaving(this.k);
+    this.reCreateSketches();
 
     this.isAutoNext = false;
     clearInterval(this.autoNextTimer);
+  }
+
+  private reCreateSketches() {
+    this.sketch = new MisraGries(this.k);
+    this.spaceSavingSketch = new SpaceSaving(this.kSS);
+    this.realCounter = new RealCounter();
+    this.unbiasedSpaceSaving = new UnbiasedSpaceSaving(this.kSS);
   }
 
   // isItemInSet(item: Item): boolean {
