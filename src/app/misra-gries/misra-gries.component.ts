@@ -8,12 +8,19 @@ import {
   Item,
 } from './item';
 import { SampleGenerator } from './sample-generator';
-import { SampleType, SampleGeneratorType } from './sample-generator-type';
+import {
+  SampleType,
+  SampleGeneratorType,
+  MajorityPosition,
+} from './sample-generator-type';
 import { SpaceSaving } from './space-saving';
 import {
   RealCounter,
 } from './real-counter';
 import { UnbiasedSpaceSaving } from './unbiased-space-saving';
+import {
+  UnbiasedMisraGries,
+} from './unbiased-misra-gries';
 
 export class SampleTypeOption {
   label: string;
@@ -49,6 +56,7 @@ export class MisraGriesComponent implements OnInit {
   public spaceSavingSketch: SpaceSaving;
   public realCounter: RealCounter;
   public unbiasedSpaceSaving: UnbiasedSpaceSaving;
+  public unbiasedMisraGries: UnbiasedMisraGries;
 
   public isAutoNext = false;
   public autoNextOffsetSeconds = 1;  // ms
@@ -83,6 +91,14 @@ export class MisraGriesComponent implements OnInit {
   public majorityCountOption = 1;
   public get majorityOptions(): number[] {
     return _.range(1, this.k + 1);
+  }
+  public majorityPosition: MajorityPosition = MajorityPosition.RANDOM;
+  public get majorityPositionOptions(): MajorityPosition[] {
+    return [
+      MajorityPosition.BEGIN,
+      MajorityPosition.END,
+      MajorityPosition.RANDOM,
+    ]
   }
 
   public get k(): number {
@@ -137,6 +153,7 @@ export class MisraGriesComponent implements OnInit {
     this.sample = SampleGenerator.gen(this.sampleSize, this.categoryList, new SampleGeneratorType(this.sampleTypeOption.type, {
       k: this.k,
       majorityCount: this.majorityCountOption,
+      majorityPosition: this.majorityPosition,
     }));
 
     this.cleanIndexAndSketch();
@@ -163,6 +180,7 @@ export class MisraGriesComponent implements OnInit {
       const item = this.sample[index];
 
       this.sketch.update(item);
+      this.unbiasedMisraGries.update(item);
       this.spaceSavingSketch.update(item);
       this.realCounter.update(item);
       this.unbiasedSpaceSaving.update(item);
@@ -209,6 +227,7 @@ export class MisraGriesComponent implements OnInit {
 
   private reCreateSketches() {
     this.sketch = new MisraGries(this.k);
+    this.unbiasedMisraGries = new UnbiasedMisraGries(this.k);
     this.spaceSavingSketch = new SpaceSaving(this.kSS);
     this.realCounter = new RealCounter();
     this.unbiasedSpaceSaving = new UnbiasedSpaceSaving(this.kSS);

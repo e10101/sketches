@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 
 import {
   MisraGriesComponent,
+  MajorityPositionPipe,
 } from './misra-gries';
 
 @NgModule({
   declarations: [
+    MajorityPositionPipe,
     AppComponent,
     MisraGriesComponent,
   ],
@@ -17,7 +19,8 @@ import {
     BrowserModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

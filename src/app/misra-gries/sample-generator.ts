@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 import {
-  SampleGeneratorType, SampleType,
+  SampleGeneratorType, SampleType, MajorityPosition,
 } from './sample-generator-type';
 import {
   Item,
@@ -23,7 +23,8 @@ export class SampleGenerator {
         sample = SampleGenerator.genRepeat(sampleSize, categories);
         break;
       case SampleType.MAJORITY:
-        sample = SampleGenerator.genMajority(sampleSize, categories, sampleType.options.k, sampleType.options.majorityCount);
+        sample = SampleGenerator.genMajority(sampleSize, categories,
+          sampleType.options.k, sampleType.options.majorityCount, sampleType.options.majorityPosition);
         break;
       default:
         // Default use the random sample
@@ -63,7 +64,7 @@ export class SampleGenerator {
     return sample;
   }
 
-  public static genMajority(sampleSize: number, categories: string[], k: number, majorityCount = 1) {
+  public static genMajority(sampleSize: number, categories: string[], k: number, majorityCount = 1, majorityPosition = MajorityPosition.RANDOM) {
     // K should not equal to 0
     k = k > 0 ? k : 1;
 
@@ -80,7 +81,20 @@ export class SampleGenerator {
         sample = _.fill(sample, randItem, i * minCount, (i + 1) * minCount);
       }
 
-      sample = _.shuffle(sample);
+      switch (majorityPosition) {
+        case MajorityPosition.RANDOM:
+          sample = _.shuffle(sample);
+          break;
+        case MajorityPosition.BEGIN:
+          // DO NOTHING
+          break;
+        case MajorityPosition.END:
+          sample = _.reverse(sample);
+          break;
+        default:
+          sample = _.shuffle(sample);
+          break;
+      }
     }
 
     sample = sample.map((item, idx) => {

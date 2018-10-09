@@ -186,6 +186,15 @@
                   </option>
                 </select>
               </div>
+              
+              <!-- Majority position options -->
+              <div class="col-auto px-1" *ngIf="isMajorityOptionNow">
+                <select class="custom-select" [(ngModel)]="majorityPosition" name="majorityPosition">
+                  <option [ngValue]="option" *ngFor="let option of majorityPositionOptions;">
+                    {{option | majorityPosition}}
+                  </option>
+                </select>
+              </div>
             </div>
           </form>
 
@@ -296,8 +305,53 @@
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <!-- Space Saving -->
+          <!-- Unbiased Misra-Gries -->
           <div class="card">
+            <h5 class="card-header">
+              Unbiased Misra-Gries
+              <div class="float-right">
+                <button class="btn btn-sm btn-outline-primary mr-2" (click)="onNextStep()" [disabled]="!this.sample || this.sample.length <= 0">Next</button>
+
+                <button class="btn btn-sm btn-outline-secondary" (click)="hide.mg = !hide.mg">H/S</button>
+              </div>
+            </h5>
+            <div class="card-body" *ngIf="!hide.mg">
+              <div>
+                k: <strong>{{unbiasedMisraGries.k}}</strong>
+              </div>
+              <div>
+                Counters' size: <strong>{{unbiasedMisraGries.counters.length}}</strong>
+              </div>
+              <div>
+                Majority threshold: <strong>{{unbiasedMisraGries.majorityThreshold}}</strong>
+              </div>
+              <div>
+                Decrement count: <strong>{{unbiasedMisraGries.decrementCount}}</strong>
+              </div>
+              <div>
+                Sum count of counters: <strong>{{unbiasedMisraGries.sumCounts}}</strong>
+              </div>
+
+              <div [ngStyle]="{'font-size': fontSize + 'px', 'min-height': (fontSize * 3) + 'px'}">
+                <div *ngFor="let c of unbiasedMisraGries.filteredCounters(); let idx = index;" class="d-inline-block" (click)="onHighlightIndex(idx)">
+                  <div class="item border rounded border-secondary m-2" [ngClass]="{'highlight': highlightIndex === idx}">{{c.label}}</div>
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">{{c.count}}</div>
+                </div>
+                <div *ngFor="let c of unbiasedMisraGries.emptyCounters" class="d-inline-block">
+                  <div class="item border rounded border-secondary m-2">
+                    &nbsp;
+                  </div>
+                  <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                    &nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <!-- Space Saving -->
+          <div class="card mt-3">
             <h5 class="card-header">
               Space Saving
               <div class="float-right">
